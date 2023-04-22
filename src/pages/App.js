@@ -3,7 +3,7 @@ import { TodoCounter} from '../components/TodoCounter/TodoCounter'
 import { TodoSearch } from '../components/TodoSearch/TodoSearch';
 import { TodoList } from '../components/TodoList/TodoList';
 import { TodoItem } from '../components/TodoItem/TodoItem';
-import { CreateTodoButtom } from "../components/CreateTodoButtom/CreateTodoButtom";
+import { CreateTodoButton } from "../components/CreateTodoButton/CreateTodoButton";
 
 // import './App.css';
 
@@ -22,11 +22,15 @@ function App(props) {
 
      <TodoList>
       {todos.map(todo => (
-      <TodoItem key={todo.text} text={todo.text}/>
+      <TodoItem
+      key={todo.text} 
+      text={todo.text}
+      completed={todo.completed}
+      />
       ))}
     </TodoList>
      
-    <CreateTodoButtom/>
+    <CreateTodoButton/>
 
     </React.Fragment>
  );
