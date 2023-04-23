@@ -8,9 +8,9 @@ import { CreateTodoButton } from "../components/CreateTodoButton/CreateTodoButto
 // import './App.css';
 
 const todos =[
-  {text:'Cortar cebolla', completed:false},
-  {text:'Tormar el curso de intro a react', completed:false},
-  {text:'Llorar con la llorona', completed:false}
+  {text:'Cortar cebolla', completed: true},
+  {text:'Tormar el curso de intro a react', completed: true},
+  {text:'Llorar con la llorona', completed: true}
 ];
 
 function App(props) {
