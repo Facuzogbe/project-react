@@ -7,19 +7,35 @@ import { AppUI } from "./AppUI";
 //     { text: "Deployar kraken plugin v2 a stage", completed: false },
 //   ];
        
-function App() {
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-  let parsedTodos;
+function useLocalStorage(itemName , initialValue) {
+  const localStorageItem = localStorage.getItem(itemName);
+  let parsedItem;
 
-  if (!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = initialValue;
   } else {
-    parsedTodos = JSON.parse(localStorageTodos);
+    parsedItem = JSON.parse(localStorageItem);
   }
 
+  const [item, setItem] = React.useState(parsedItem);
 
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const saveItem = (newItem) => {
+    const stringifiedTodos = JSON.stringify(newItem);
+    localStorage.setItem(itemName, stringifiedTodos);
+    setItem(newItem);
+  };
+  return [
+    item, 
+    saveItem,
+
+  ];
+}
+
+
+function App() {
+  const [todos, saveItem] = useLocalStorage('TODOS_V1', []) ;
+
   const [searchValue, setSearchValue] = React.useState('');
 
   const completedTodos = todos.filter((todo) => !!todo.completed).length;
@@ -39,24 +55,18 @@ function App() {
     });
   }
 
-  const saveTodos = (newTodos) => {
-    const stringifiedTodos = JSON.stringify(newTodos);
-    localStorage.setItem('TODOS_V1', stringifiedTodos);
-    setTodos(newTodos);
-  };
-
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     const newTodos = [...todos];
     newTodos[todoIndex].completed = true;
-    saveTodos(newTodos);
+    saveItem(newTodos);
   };
 
   const deleteTodo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     const newTodos = [...todos];
     newTodos.splice(todoIndex, 1);
-    saveTodos(newTodos);
+    saveItem(newTodos);
   };
 
   return (
