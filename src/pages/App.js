@@ -32,9 +32,8 @@ function useLocalStorage(itemName , initialValue) {
   ];
 }
 
-
 function App() {
-  const [todos, saveItem] = useLocalStorage('TODOS_V1', []) ;
+  const [todos, saveTodo] = useLocalStorage('TODOS_V1', []) ;
 
   const [searchValue, setSearchValue] = React.useState('');
 
@@ -59,14 +58,14 @@ function App() {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     const newTodos = [...todos];
     newTodos[todoIndex].completed = true;
-    saveItem(newTodos);
+    saveTodo(newTodos);
   };
 
   const deleteTodo = (text) => {
     const todoIndex = todos.findIndex((todo) => todo.text === text);
     const newTodos = [...todos];
     newTodos.splice(todoIndex, 1);
-    saveItem(newTodos);
+    saveTodo(newTodos);
   };
 
   return (
